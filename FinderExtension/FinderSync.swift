@@ -21,13 +21,26 @@ final class FinderSync: FIFinderSync {
             var icons: [String: NSImage] = [:]
             for bundleID in ["com.microsoft.VSCode", "com.googlecode.iterm2"] {
                 guard let appURL = workspace.urlForApplication(withBundleIdentifier: bundleID) else { continue }
-                icons[bundleID] = Self.menuIcon(workspace.icon(forFile: appURL.path))
+                icons[bundleID] = Self.menuIcon(Self.applicationIcon(at: appURL))
             }
             DispatchQueue.main.async { [weak self] in
                 self?.applicationIcons = icons
                 self?.iconsLoaded = true
             }
         }
+    }
+
+    private static func applicationIcon(at appURL: URL) -> NSImage {
+        // Read the installed app's original artwork. Workspace icons may include
+        // a system-added frame that looks heavy at menu size.
+        if let bundle = Bundle(url: appURL),
+           let name = bundle.object(forInfoDictionaryKey: "CFBundleIconFile") as? String,
+           let iconURL = bundle.url(forResource: name, withExtension: nil)
+                ?? bundle.url(forResource: name, withExtension: "icns"),
+           let image = NSImage(contentsOf: iconURL) {
+            return image
+        }
+        return NSWorkspace.shared.icon(forFile: appURL.path)
     }
 
     private static func menuIcon(_ source: NSImage) -> NSImage {

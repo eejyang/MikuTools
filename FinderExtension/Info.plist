@@ -7,8 +7,8 @@
     <key>CFBundleName</key><string>MikuTools Finder</string>
     <key>CFBundleDisplayName</key><string>MikuTools Finder</string>
     <key>CFBundlePackageType</key><string>XPC!</string>
-    <key>CFBundleShortVersionString</key><string>1.9</string>
-    <key>CFBundleVersion</key><string>10</string>
+    <key>CFBundleShortVersionString</key><string>1.10</string>
+    <key>CFBundleVersion</key><string>11</string>
     <key>LSMinimumSystemVersion</key><string>$(MACOSX_DEPLOYMENT_TARGET)</string>
     <key>NSExtension</key><dict>
         <key>NSExtensionAttributes</key><dict/>
